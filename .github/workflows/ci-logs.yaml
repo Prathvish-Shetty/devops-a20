@@ -1,28 +1,56 @@
-name: Save Logs in CI/CD (HTML/JS Project)
+# name: Save Logs in CI/CD (HTML/JS Project)
+
+# on:
+#   push:
+#     branches: [ main ]
+#   pull_request:
+
+# jobs:
+#   build-and-log:
+#     runs-on: ubuntu-latest
+
+#     steps:
+#     - name: Checkout Code
+#       uses: actions/checkout@v3
+
+#     - name: Set script executable
+#       run: chmod +x build.sh
+
+#     - name: Run Build Script and Save Log
+#       run: |
+#         mkdir logs
+#         ./build.sh > logs/build-log.txt 2>&1
+
+#     - name: Upload Build Logs
+#       uses: actions/upload-artifact@v4
+#       with:
+#         name: html-js-build-logs
+#         path: logs/build-log.txt
+
+
+name: Build and Save Logs in Shared Folder
 
 on:
   push:
-    branches: [ main ]
-  pull_request:
+    branches: [main]
 
 jobs:
-  build-and-log:
+  build:
     runs-on: ubuntu-latest
 
     steps:
-    - name: Checkout Code
-      uses: actions/checkout@v3
+      - name: Checkout Code
+        uses: actions/checkout@v4
 
-    - name: Set script executable
-      run: chmod +x build.sh
+      - name: Create Shared Directory and Log File
+        run: |
+          mkdir -p shared/logs
+          echo "Build started at $(date)" > shared/logs/build-log.txt
+          echo "Compiling code..." >> shared/logs/build-log.txt
+          echo "Build completed at $(date)" >> shared/logs/build-log.txt
 
-    - name: Run Build Script and Save Log
-      run: |
-        mkdir logs
-        ./build.sh > logs/build-log.txt 2>&1
-
-    - name: Upload Build Logs
-      uses: actions/upload-artifact@v4
-      with:
-        name: html-js-build-logs
-        path: logs/build-log.txt
+      - name: Upload Shared Logs as Artifact
+        uses: actions/upload-artifact@v4
+        with:
+          name: shared-logs
+          path: shared/logs/build-log.txt

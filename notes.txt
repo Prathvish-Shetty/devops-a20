@@ -1,1 +1,3 @@
 20.Configure a CI/CD pipeline to save build logs as text files.
+
+all logs will be stored in a log file in actions tab, when you click workflow, below it
