@@ -1,0 +1,1 @@
+20.Configure a CI/CD pipeline to save build logs as text files.
