@@ -22,7 +22,7 @@ jobs:
         ./build.sh > logs/build-log.txt 2>&1
 
     - name: Upload Build Logs
-      uses: actions/upload-artifact@v3
+      uses: actions/upload-artifact@v4
       with:
         name: html-js-build-logs
         path: logs/build-log.txt
